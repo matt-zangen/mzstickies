@@ -1,0 +1,17 @@
+{
+  "name": "mzStickies",
+  "version": "0.1.0",
+  "description": "Sticky Notes app for interview challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "~4.9.x",
+    "morgan": "^1.5.2"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "license": "MIT"
+}

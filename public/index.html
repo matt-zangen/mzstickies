@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- css -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="app.css">
+		<!-- scripts -->
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-sanitize.min.js"></script>
+		<script src="app.js"></script>
+	</head>
+	<body ng-app="mzStickies" ng-controller="StickiesCtrl as vm" ng-cloak>
+
+		<div class="container">
+
+			<div class="jumbotron">
+				<h1>Stickies</h1>
+			</div>
+
+			<div class="row">
+
+				<!-- new sticky input -->
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 bottom-buffer">
+
+					<button ng-click="vm.showInput = 1" ng-if="!vm.showInput">New Sticky</button>
+
+					<div ng-show="vm.showInput">
+						<textarea class="sticky sticky-input" ng-model="vm.stickyText" ng-trim="false" ng-change="vm.storeTempSticky()" placeholder="Remember to..."></textarea>
+						<button ng-click="vm.saveSticky()">Save Sticky</button>
+					</div>
+
+				</div>
+
+				<!-- sticky grid -->
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 bottom-buffer" ng-repeat="sticky in vm.stickies track by $index">
+					<div class="sticky sticky-text">
+						<span ng-bind-html="sticky | toHtml"></span>
+					</div>
+				</div>
+
+			</div>
+			
+
+		</div>
+
+	</body>
+</html>
