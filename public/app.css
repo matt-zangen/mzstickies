@@ -1,18 +1,9 @@
-.sticky {
-	font-family: Helvetica, Arial, sans-serif;
-	background-color: #eee;
-	border-radius: 2px;
-	border: 1px solid #ccc;
-	text-align: center;
-	padding: 15px;
-	margin: 0px;
+.bottom-buffer { 
+	margin-bottom: 20px; 
 }
 
-.sticky-text {
-	height: 275px;
-	word-wrap: break-word;
-	overflow-y: auto;
-	overflow-x: hidden;
+.yellow {
+	background: #F9F479;
 }
 
 .sticky-input {
@@ -22,6 +13,28 @@
 	height: 240px;
 }
 
-.bottom-buffer { 
-	margin-bottom: 20px; 
+.sticky {
+	font-family: Helvetica, Arial, sans-serif;
+	text-align: center;
+	border: 0;
+	padding: 18px;
+}
+
+/* prefer this top right as 'X', but don't want to fight with scrollbar */
+.sticky-corner {
+	position: absolute;
+	bottom: 3;
+	right: 40;
+}
+
+.sticky-corner.close {
+	font-size: 14;
+	color: red;
+}
+
+.sticky-text-box {
+	height: 275px;
+	word-wrap: break-word;
+	overflow-y: auto;
+	overflow-x: hidden;
 }

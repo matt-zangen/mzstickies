@@ -13,8 +13,11 @@
 
 		<div class="container">
 
-			<div class="jumbotron">
+			<div class="jumbotron yellow">
 				<h1>Stickies</h1>
+				<h3>Matt Zangen</h3>
+				<h4>zangen@gmail.com</h4>
+				<h4>https://github.com/matt-zangen</h4>
 			</div>
 
 			<div class="row">
@@ -25,15 +28,17 @@
 					<button ng-click="vm.showInput = 1" ng-if="!vm.showInput">New Sticky</button>
 
 					<div ng-show="vm.showInput">
-						<textarea class="sticky sticky-input" ng-model="vm.stickyText" ng-trim="false" ng-change="vm.storeTempSticky()" placeholder="Remember to..."></textarea>
+						<textarea class="sticky sticky-input yellow" ng-model="vm.stickyText" ng-trim="false" ng-change="vm.inputChanged()" placeholder="Remember to..."></textarea>
 						<button ng-click="vm.saveSticky()">Save Sticky</button>
+						<button ng-click="vm.clearInput()">Clear</button>
 					</div>
 
 				</div>
 
 				<!-- sticky grid -->
 				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 bottom-buffer" ng-repeat="sticky in vm.stickies track by $index">
-					<div class="sticky sticky-text">
+					<div class="sticky sticky-text-box yellow">
+						<span class="sticky-corner close" ng-click="vm.removeSticky($index)">remove</span>
 						<span ng-bind-html="sticky | toHtml"></span>
 					</div>
 				</div>

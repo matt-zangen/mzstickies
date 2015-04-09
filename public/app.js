@@ -1,53 +1,101 @@
-var app = angular.module('mzStickies', [
-	'ngSanitize'
-]);
+(function() {
 
-app.controller('StickiesCtrl', StickiesCtrl);
+	// APP DEFINITION
 
-StickiesCtrl.$inject = ['$window'];
-function StickiesCtrl ($window) {
+	var app = angular.module('mzStickies', [
+		// required for ng-bind-html, to santize HTML output
+		'ngSanitize'
+	]);
 
-	var vm = this;
+	// COMPONENT DEFINITIONS
 
-	vm.saveSticky = saveSticky;
-	vm.storeTempSticky = storeTempSticky;
+	app.controller('StickiesCtrl', StickiesCtrl);
+	app.filter('toHtml', toHtml);
 
-	init();
+	// COMPONENT FUNCTIONS
 
-	function init () {
-		vm.stickies = JSON.parse($window.localStorage.getItem('stickies')) || [];
-		vm.stickyText = $window.localStorage.getItem('tempSticky') || '';
-		if (vm.stickyText) vm.showInput = 1;
+	StickiesCtrl.$inject = ['$window'];
+	function StickiesCtrl($window) {
+
+		var vm = this;
+		var ls = $window.localStorage;
+
+		// explicitly expose public functions to View-Model
+		vm.saveSticky = saveSticky;
+		vm.inputChanged = inputChanged;
+		vm.removeSticky = removeSticky;
+		vm.clearInput = clearInput;
+
+		init();
+
+		function init() {
+
+			// display stickies from localStorage
+			vm.stickies = JSON.parse(ls.getItem('stickies')) || [];
+
+			// get persisted input from previous pageload
+			vm.stickyText = ls.getItem('tempSticky') || '';
+
+			// show input with persisted input
+			if (vm.stickyText) vm.showInput = 1;
+
+		}
+
+		function inputChanged() {
+
+			// limit text to 250 characters
+			vm.stickyText = vm.stickyText.substr(0, 250);
+
+			// set persisted input for next pageload
+			ls.setItem('tempSticky', vm.stickyText);
+
+		}
+
+		// not in specs
+		function clearInput() {
+
+			vm.stickyText = '';
+			ls.removeItem('tempSticky');
+
+		}
+
+		function saveSticky() {
+
+			// not in specs
+			if (!vm.stickyText) return;
+
+			vm.stickies.unshift(vm.stickyText);
+			ls.setItem('stickies', JSON.stringify(vm.stickies));
+
+			// not in specs
+			clearInput();
+
+		}
+
+		// not in specs
+		function removeSticky(index) {
+
+			vm.stickies.splice(index, 1);
+			ls.setItem('stickies', JSON.stringify(vm.stickies));
+
+		}
+
 	}
 
-	function saveSticky () {
-		// minimum length was not required by specs
-		// if (!vm.stickyText) return;
-		vm.stickies.unshift(vm.stickyText);
-		$window.localStorage.setItem('stickies', JSON.stringify(vm.stickies));
-	}
+	// filter text for <pre>-like HTML display
+	function toHtml() {
 
-	function storeTempSticky () {
-		// limit text to 250 characters
-		vm.stickyText = vm.stickyText.substr(0, 250);
-		$window.localStorage.setItem('tempSticky', vm.stickyText);
-	}
+		return function (text) {
 
-}
+			if (!text) return text;
 
-// filter text for pre-like HTML display
-app.filter('toHtml', toHtml);
-function toHtml () {
+			text = text.replace(/\r?\n\r?/gm, '<br/>');
+			text = text.replace(/\s/gm, '\u00A0');
 
-	return function (text) {
+			return text;
 
-		if (!text) return text;
-
-		text = text.replace(/\r?\n\r?/gm, '<br/>');
-		text = text.replace(/\s/gm, '\u00A0');
-
-		return text;
+		}
 
 	}
 
-}
+})();
