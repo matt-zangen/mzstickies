@@ -1,36 +1,33 @@
-# node-js-getting-started
+# mzStickies
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+A response to an interview challenge to create a small Single Page App for creating Sticky Notes
 
-This application support the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+## Demo
 
-## Running Locally
+http://mzstickies.herokuapp.com
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
+## Requirements
 
-```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
-$ npm install
-$ npm start
-```
+* Load a starting page with a button that indicates that it will create a New note.
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+* When user clicks or taps (touch event) the button a text entry area opens that allows them to type up to 240 characters.
 
-## Deploying to Heroku
+* Text in the typing area (but not yet “saved”) should survive a hard page refresh (Command/Control-r).
 
-```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
+* When done, user should be able to click, tap (touch event) a “save” button.
 
-## Documentation
+* The save button should save the text in some kind of local storage and display it in a grid of sticky notes.
 
-For more information about using Node.js on Heroku, see these Dev Center articles:
+* Refresh of page should show notes in local storage.
 
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+* Notes should be sorted by most recent on top.
+
+## Excuses
+
+I added some features and flair not in the spec, just for fun and my need for thoroughness and to exercise some skills.
+
+I did not refactor as much of the Angular code as I could have. This was a purposeful decision, since refactoring into services and directives would have added complexity for little benefit; we don't need the reusability or efficiency gains from these components for such basic requirements. Before building any further, though, logic in the controller should move to services/directives/etc.
+
+I did not make incremental commits because this was not a complex app and I moved quickly, but I should have.
+
+I did not write tests, but I should have.
